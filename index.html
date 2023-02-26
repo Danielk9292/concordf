@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Meu Bate-Papo</title>
+    <style>
+      /* estilo para o formulário */
+      #chat-form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      #chat-form input[type="text"] {
+        flex: 1;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Meu Bate-Papo</h1>
+
+    <div id="chat-messages">
+      <!-- aqui as mensagens serão exibidas -->
+    </div>
+
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script src="chat.js"></script>
+  </body>
+</html>
