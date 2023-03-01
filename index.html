@@ -1,47 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Chat em tempo real</title>
+    <meta charset="UTF-8" />
+    <title>Chat</title>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-      const socket = io();
-
-      // Quando o formulário for enviado
-      document.querySelector("form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const mensagem = document.querySelector("input").value;
-
-        // Enviar a mensagem para o servidor
-        socket.emit("enviarMensagem", mensagem);
-
-        // Limpar o campo de mensagem
-        document.querySelector("input").value = "";
-      });
-
-      // Quando uma nova mensagem for recebida
-      socket.on("novaMensagem", (mensagem) => {
-        const listaMensagens = document.querySelector("ul");
-        const novaMensagem = document.createElement("li");
-        novaMensagem.textContent = mensagem;
-        listaMensagens.appendChild(novaMensagem);
-      });
-    </script>
-  </head>
-  <body>
-    <h1>Chat em tempo real</h1>
-    <ul></ul>
-    <form>
-      <input type="text" placeholder="Digite uma mensagem">
-      <button>Enviar</button>
-
-<script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <ul id="messages"></ul>
     <form id="chat-form">
       <input id="m" autocomplete="off" /><button>Enviar</
-    </form>
-  </body>
-</html>
-
