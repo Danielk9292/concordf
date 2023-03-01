@@ -1,12 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Chat</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form id="chat-form">
-      <input id="m" autocomplete="off" /><button>Enviar</
+<head>
+	<title>Tirar Foto com JavaScript - Câmera Traseira</title>
+	<style>
+		video {
+			border: 1px solid #000;
+			width: 640px;
+			height: 480px;
+			transform: scaleX(-1);
+		}
+		#canvas {
+			display: none;
+		}
+		#preview {
+			border: 1px solid #000;
+			width: 300px;
+			height: 225px;
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Tirar Foto com JavaScript - Câmera Traseira</h1>
+	</header>
+	<main>
+		<h2>Câmera</h2>
+		<video id="video" autoplay></video>
+		<button id="snap">Tirar Foto</button>
+		<canvas id="canvas"></canvas>
+		<h2>Pré-visualização</h2>
+		<img id="preview" src="" alt="Pré-visualização da foto">
+	</main>
+	<footer>
+		<p>&copy; 2023 Meu Site</p>
+	</footer>
+	<script>
+		const video = document.getElementById('video');
+		const canvas = document.getElementById('canvas');
+		const snap = document.getElementById('snap');
+		const preview = document.getElementById('preview');
+		const constraints = {
+			audio: false,
+			video: {
+				facingMode: 'environment',
+				width: { ideal: 640 },
+				height: { ideal: 480 }
+			}
+		};
+		async function initCamera() {
+			try {
+				const stream = await navigator.mediaDevices.getUserMedia(constraints);
+				video.srcObject = stream;
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		function takePicture() {
+			const context = canvas.getContext('2d');
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
+			context.drawImage(video, 0, 0, canvas.width, canvas.height);
+			preview.src = canvas.toDataURL('image/png');
+			preview.style.display = 'block';
+		}
+		initCamera();
+		snap.addEventListener('click', takePicture);
+	</script>
+</body>
+</html>
