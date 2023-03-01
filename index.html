@@ -1,33 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Meu Bate-Papo</title>
-    <style>
-      /* estilo para o formulário */
-      #chat-form {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
+    <title>Chat em tempo real</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
 
-      #chat-form input[type="text"] {
-        flex: 1;
-        margin-right: 10px;
-      }
-    </style>
+      // Quando o formulário for enviado
+      document.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const mensagem = document.querySelector("input").value;
+
+        // Enviar a mensagem para o servidor
+        socket.emit("enviarMensagem", mensagem);
+
+        // Limpar o campo de mensagem
+        document.querySelector("input").value = "";
+      });
+
+      // Quando uma nova mensagem for recebida
+      socket.on("novaMensagem", (mensagem) => {
+        const listaMensagens = document.querySelector("ul");
+        const novaMensagem = document.createElement("li");
+        novaMensagem.textContent = mensagem;
+        listaMensagens.appendChild(novaMensagem);
+      });
+    </script>
   </head>
   <body>
-    <h1>Meu Bate-Papo</h1>
-
-    <div id="chat-messages">
-      <!-- aqui as mensagens serão exibidas -->
-    </div>
-
-    <form id="chat-form">
-      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-      <button type="submit">Enviar</button>
+    <h1>Chat em tempo real</h1>
+    <ul></ul>
+    <form>
+      <input type="text" placeholder="Digite uma mensagem">
+      <button>Enviar</button>
     </form>
-
-    <script src="chat.js"></script>
   </body>
 </html>
